@@ -57,7 +57,7 @@
     </header>
 
     <div class="container mt-4">
-        <h4 class="fw-bold mb-4">My cart ({{ cart_items|length|default:"3" }})</h4>
+        <h4 class="fw-bold mb-4">My cart ({{ cart_items|length|default:"0" }})</h4>
 
         <div class="row">
             <div class="col-lg-9">
@@ -65,7 +65,9 @@
                     {% for item in cart_items %}
                     <div class="cart-item">
                         <div class="item-img">
-                            <img src="{{ item.product.image.url }}" alt="">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                            {% endif %}
                         </div>
                         <div class="flex-grow-1">
                             <div class="d-flex justify-content-between">
@@ -77,7 +79,7 @@
                                 Seller: Artel Market
                             </p>
                             <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-danger px-3">Remove</button>
+                                <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-sm btn-outline-danger px-3">Remove</a>
                                 <button class="btn btn-sm btn-outline-primary px-3">Save for later</button>
                             </div>
                         </div>
@@ -87,14 +89,21 @@
                             </select>
                         </div>
                     </div>
+                    {% empty %}
+                    <div class="text-center py-5">
+                        <p class="text-muted">Your cart is empty.</p>
+                        <a href="{% url 'product_list' %}" class="btn btn-primary">Go Shopping</a>
+                    </div>
                     {% endfor %}
 
+                    {% if cart_items %}
                     <div class="d-flex justify-content-between mt-4">
                         <a href="{% url 'product_list' %}" class="btn btn-primary px-4 fw-bold">
                             <i class="fa fa-arrow-left me-2"></i> Back to shop
                         </a>
-                        <button class="btn btn-outline-primary fw-bold">Remove all</button>
+                        <a href="{% url 'clear_cart' %}" class="btn btn-outline-primary fw-bold">Remove all</a>
                     </div>
+                    {% endif %}
                 </div>
 
                 <div class="row g-3 mb-4">
@@ -114,13 +123,13 @@
                 </div>
 
                 <div class="white-card shadow-sm">
-                    <div class="summary-row"><span class="text-muted">Subtotal:</span><span>$1403.97</span></div>
-                    <div class="summary-row"><span class="text-muted">Discount:</span><span class="text-danger">-$60.00</span></div>
-                    <div class="summary-row"><span class="text-muted">Tax:</span><span class="text-success">+$14.00</span></div>
+                    <div class="summary-row"><span class="text-muted">Subtotal:</span><span>${{ total_price|default:"0.00" }}</span></div>
+                    <div class="summary-row"><span class="text-muted">Discount:</span><span class="text-danger">-$0.00</span></div>
+                    <div class="summary-row"><span class="text-muted">Tax:</span><span class="text-success">+$0.00</span></div>
                     
                     <div class="summary-row total-price">
                         <span>Total:</span>
-                        <span>$1357.97</span>
+                        <span>${{ total_price|default:"0.00" }}</span>
                     </div>
 
                     <button class="btn-checkout mt-3">Checkout</button>
@@ -141,7 +150,9 @@
                 <div class="col">
                     <div class="save-card shadow-sm h-100">
                         <div class="save-img-wrap">
-                            <img src="{{ p.image.url }}" alt="">
+                            {% if p.image %}
+                            <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                            {% endif %}
                         </div>
                         <div class="p-3">
                             <h6 class="fw-bold mb-1">${{ p.price }}</h6>
