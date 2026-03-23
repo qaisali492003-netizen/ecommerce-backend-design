@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yz-y2&o1m0y9aly#v9o70@hl^g7^5362@zkkjw)grd++gqd0^d'
 
 # 1. CRITICAL: Turn off Debug for Deployment
-DEBUG = False
+DEBUG = True
 
 # 2. Allow all hosts for now so the URL works immediately
 ALLOWED_HOSTS = ['*']
@@ -87,3 +87,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# 5. AUTHENTICATION REDIRECTS (FIXES THE BUFFERING LOOP)
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'product_list'
+LOGOUT_REDIRECT_URL = 'product_list'
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost', '*']
+
+# Required for Vercel to handle forms correctly
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
