@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -6,12 +7,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yz-y2&o1m0y9aly#v9o70@hl^g7^5362@zkkjw)grd++gqd0^d'
 
-# 1. CRITICAL: Turn off Debug for Deployment
+# 1. DEBUG should be True for testing, but False for final submission
 DEBUG = True
 
-# 2. Allow all hosts for now so the URL works immediately
-ALLOWED_HOSTS = ['*']
-
+# 2. Allowed hosts for local and Vercel deployment
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost', '*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -26,7 +26,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # 3. REQUIRED for CSS/JS on live site
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -54,11 +54,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# 3. DATABASE CONFIGURATION (AUTO-SWITCHING)
+# This looks for the 'DATABASE_URL' you added to Vercel. 
+# If it doesn't find it (like on your laptop), it uses local SQLite.
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+        ssl_require=True if os.environ.get('DATABASE_URL') else False
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -73,25 +77,19 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
-# 4. STATIC & MEDIA SETTINGS FOR DEPLOYMENT
+# 4. STATIC & MEDIA SETTINGS
 STATIC_URL = 'static/'
-
-# Absolute path for collectstatic to gather files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Efficiently serve static files with WhiteNoise
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# 5. AUTHENTICATION REDIRECTS (FIXES THE BUFFERING LOOP)
+
+# 5. AUTHENTICATION & SECURITY
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'product_list'
 LOGOUT_REDIRECT_URL = 'product_list'
-ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost', '*']
 
-# Required for Vercel to handle forms correctly
 CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']

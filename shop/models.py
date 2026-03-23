@@ -17,9 +17,7 @@ class Product(models.Model):
         return self.name
 
 class CartItem(models.Model):
-    # null=True allows guests to have items without an account
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
-    # session_key stores the ID for guest users
     session_key = models.CharField(max_length=40, null=True, blank=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
