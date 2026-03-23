@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} | Brand</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --brand-blue: #0d6efd; --gray-100: #f7f8fa; --border: #e3e8ee; --text-muted: #8b96a5; --orange: #FF9017; --dark: #1C1C1C; }
+        body { background-color: var(--gray-100); font-family: 'Inter', sans-serif; color: var(--dark); }
+
+        /* HEADER & NAV */
+        .main-header { background: #fff; padding: 15px 0; border-bottom: 1px solid var(--border); }
+        .logo-box { background: var(--brand-blue); color: #fff; padding: 5px 12px; border-radius: 6px; font-weight: bold; }
+        
+        /* LAYOUT COMPONENTS */
+        .white-card { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; }
+        
+        /* IMAGE GALLERY */
+        .img-main-box { border: 1px solid var(--border); border-radius: 6px; padding: 20px; text-align: center; height: 400px; display: flex; align-items: center; justify-content: center; background: #fff; }
+        .img-main-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .thumb-img { width: 56px; height: 56px; border: 1px solid var(--border); border-radius: 4px; padding: 2px; cursor: pointer; object-fit: contain; }
+
+        /* PRICE TIERS */
+        .price-tier-box { background: #FFF0DF; padding: 15px; display: flex; gap: 40px; margin: 20px 0; border-radius: 4px; overflow-x: auto; }
+        .price-item { border-right: 1px solid #f3d1ad; padding-right: 40px; white-space: nowrap; }
+        .price-item:last-child { border: none; }
+        .p-price { color: #FA3434; font-size: 18px; font-weight: bold; margin-bottom: 0; }
+        .p-qty { color: #606060; font-size: 13px; }
+
+        /* SUPPLIER CARD */
+        .supplier-card { border: 1px solid var(--border); border-radius: 6px; padding: 18px; background: #fff; }
+        .s-avatar { width: 48px; height: 48px; background: #C3f0FF; color: #4CA7D4; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; }
+
+        /* TABS */
+        .nav-tabs { border-bottom: 1px solid var(--border); }
+        .nav-tabs .nav-link { color: var(--text-muted); border: none; border-bottom: 2px solid transparent; font-weight: 500; padding: 12px 20px; }
+        .nav-tabs .nav-link.active { color: var(--brand-blue); border-bottom: 2px solid var(--brand-blue); background: none; }
+
+        /* RELATED PRODUCTS GRID */
+        .related-img-container { background-color: #EEEEEE; border-radius: 6px; height: 160px; display: flex; align-items: center; justify-content: center; padding: 15px; margin-bottom: 10px; transition: transform 0.2s; }
+        .related-img-container:hover { transform: translateY(-3px); }
+        .related-img-container img { max-height: 100%; max-width: 100%; mix-blend-mode: multiply; }
+        .related-link { text-decoration: none; color: inherit; display: block; }
+        .related-link:hover .text-secondary { color: var(--brand-blue) !important; }
+
+        /* BLUE BANNER */
+        .discount-banner { background: linear-gradient(90deg, #237CFF 0%, #005ADE 100%); border-radius: 8px; color: #fff; padding: 25px 35px; display: flex; justify-content: space-between; align-items: center; }
+
+        /* FOOTER */
+        .footer-main { background: #fff; border-top: 1px solid var(--border); padding: 40px 0; margin-top: 50px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 991px) {
+            .price-tier-box { gap: 20px; }
+            .price-item { padding-right: 20px; }
+            .img-main-box { height: 300px; }
+            .discount-banner { flex-direction: column; text-align: center; gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header sticky-top">
+        <div class="container d-flex align-items-center">
+            <a href="{% url 'product_list' %}" class="text-decoration-none d-flex align-items-center">
+                <span class="logo-box me-2">B</span> <span class="fs-4 fw-bold text-primary">Brand</span>
+            </a>
+            <div class="flex-grow-1 mx-5 d-none d-lg-block">
+                <form action="{% url 'product_search' %}" method="GET" class="input-group" style="max-width: 500px;">
+                    <input type="text" name="search" class="form-control" placeholder="Search">
+                    <button class="btn btn-primary px-4">Search</button>
+                </form>
+            </div>
+            <div class="d-flex gap-4 text-muted small ms-auto align-items-center">
+                <div class="text-center d-none d-md-block"><i class="fa fa-user fs-5"></i><br>Profile</div>
+                <div class="text-center d-none d-md-block"><i class="fa fa-comment fs-5"></i><br>Message</div>
+                <div class="text-center d-none d-md-block"><i class="fa fa-heart fs-5"></i><br>Orders</div>
+                
+                <a href="{% url 'cart_page' %}" class="text-decoration-none text-muted text-center">
+                    <i class="fa fa-shopping-cart fs-5 text-primary"></i><br>
+                    <span class="d-none d-md-inline text-primary">My cart</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <nav class="small text-muted mb-4">
+            Home > Clothings > Men's wear > <span class="text-dark">{{ product.name }}</span>
+        </nav>
+
+        <div class="white-card shadow-sm">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="img-main-box mb-3">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <img src="{{ product.image.url }}" class="thumb-img border-primary">
+                        <img src="{{ product.image.url }}" class="thumb-img" style="opacity: 0.4;">
+                        <img src="{{ product.image.url }}" class="thumb-img" style="opacity: 0.4;">
+                    </div>
+                </div>
+
+                <div class="col-lg-5 ps-lg-4 mt-3 mt-lg-0">
+                    <p class="text-success mb-1 small"><i class="fa fa-check"></i> In stock</p>
+                    <h4 class="fw-bold mb-3">{{ product.name }}</h4>
+                    
+                    <div class="d-flex align-items-center gap-3 mb-3 small">
+                        <div class="text-warning"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i> <span class="text-orange ms-1">9.3</span></div>
+                        <div class="text-muted"><i class="fa fa-comment"></i> 32 reviews</div>
+                        <div class="text-muted"><i class="fa fa-shopping-basket"></i> 154 sold</div>
+                    </div>
+
+                    <div class="price-tier-box">
+                        <div class="price-item">
+                            <p class="p-price">${{ product.price }}</p>
+                            <span class="p-qty">50-100 pcs</span>
+                        </div>
+                        <div class="price-item">
+                            <p class="p-price">$90.00</p>
+                            <span class="p-qty">100-700 pcs</span>
+                        </div>
+                        <div class="price-item">
+                            <p class="p-price">$78.00</p>
+                            <span class="p-qty">700+ pcs</span>
+                        </div>
+                    </div>
+
+                    <div class="small">
+                        <div class="row mb-2 pb-2 border-bottom"><div class="col-4 text-muted">Price:</div><div class="col-8">Negotiable</div></div>
+                        <div class="row mb-2 pb-2 border-bottom"><div class="col-4 text-muted">Type:</div><div class="col-8">Classic shoes</div></div>
+                        <div class="row mb-2 pb-2 border-bottom"><div class="col-4 text-muted">Material:</div><div class="col-8">Plastic material</div></div>
+                        <div class="row mb-2 pb-2 border-bottom"><div class="col-4 text-muted">Design:</div><div class="col-8">Modern nice</div></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 mt-4 mt-lg-0">
+                    <div class="supplier-card shadow-sm">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="s-avatar">R</div>
+                            <div class="small">
+                                <div class="text-muted">Supplier</div>
+                                <div class="fw-bold">Guanjoi Trading LLC</div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="small text-muted mb-2"><img src="https://flagcdn.com/16x12/de.png" class="me-2"> Germany, Berlin</div>
+                        <div class="small text-muted mb-2"><i class="fa fa-shield-alt me-2"></i> Verified Seller</div>
+                        <div class="small text-muted mb-3"><i class="fa fa-globe me-2"></i> Worldwide shipping</div>
+                        
+                        <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary w-100 mb-2 fw-bold">
+                            <i class="fa fa-shopping-cart me-2"></i> Add to cart
+                        </a>
+                        <button class="btn btn-outline-primary w-100 mb-3">Seller's profile</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-primary text-decoration-none small fw-bold"><i class="fa fa-heart me-1"></i> Save for later</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="white-card shadow-sm p-0 overflow-hidden">
+                    <ul class="nav nav-tabs px-3 pt-2 bg-white">
+                        <li class="nav-item"><a class="nav-link active" href="#">Description</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Shipping</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">About seller</a></li>
+                    </ul>
+                    <div class="p-4">
+                        <p class="text-muted mb-4">{{ product.description }}</p>
+                        <table class="table table-bordered small text-muted mb-4" style="max-width: 500px;">
+                            <tr><td class="bg-light" width="150">Model</td><td>#8786867</td></tr>
+                            <tr><td class="bg-light">Style</td><td>Classic style</td></tr>
+                            <tr><td class="bg-light">Memory</td><td>36GB RAM</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3">
+                <div class="white-card shadow-sm">
+                    <h6 class="fw-bold mb-3">You may like</h6>
+                    {% for p in products|slice:":5" %}
+                    <a href="{% url 'product_detail' p.id %}" class="text-decoration-none d-flex gap-3 mb-3 align-items-start related-link">
+                        <div class="border rounded p-1 bg-white" style="width: 80px; height: 80px; flex-shrink: 0;">
+                            <img src="{{ p.image.url }}" class="w-100 h-100" style="object-fit: contain;">
+                        </div>
+                        <div>
+                            <div class="small text-dark mb-1" style="line-height: 1.2;">{{ p.name|truncatechars:35 }}</div>
+                            <div class="text-muted small" style="font-size: 11px;">${{ p.price }} - $99.50</div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="white-card shadow-sm p-4">
+            <h5 class="fw-bold mb-4">Related products</h5>
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+                {% for p in products|slice:":6" %}
+                <div class="col">
+                    <a href="{% url 'product_detail' p.id %}" class="related-link">
+                        <div class="related-img-container">
+                            <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                        </div>
+                        <div class="small text-secondary mb-1">{{ p.name|truncatechars:20 }}</div>
+                        <div class="text-muted" style="font-size: 12px;">${{ p.price }} - $40.00</div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="discount-banner mt-4">
+            <div>
+                <h4 class="fw-bold mb-1">Super discount on more than 100 USD</h4>
+                <p class="mb-0 opacity-75">Have you ever finally just write dummy info</p>
+            </div>
+            <button class="btn btn-warning fw-bold px-4" style="background: #FF9017; border: none; color: #fff;">Shop now</button>
+        </div>
+    </div>
+
+    <footer class="footer-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="logo-box me-2">B</span> <span class="fs-4 fw-bold text-primary">Brand</span>
+                    </div>
+                    <p class="text-muted small">Best information about the company gies here but now lorem ipsum is</p>
+                </div>
+                <div class="col-lg-2 col-6"><h6 class="fw-bold mb-3">About</h6><ul class="list-unstyled small text-muted"><li>About Us</li><li>Find store</li></ul></div>
+                <div class="col-lg-2 col-6"><h6 class="fw-bold mb-3">Information</h6><ul class="list-unstyled small text-muted"><li>Help Center</li><li>Money Refund</li></ul></div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

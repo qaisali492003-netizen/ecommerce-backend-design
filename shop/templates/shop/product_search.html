@@ -1,0 +1,117 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small">
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}" class="text-decoration-none text-muted">Home</a></li>
+            <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Clothings</a></li>
+            <li class="breadcrumb-item active">Search results</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="bg-white border-top border-bottom py-3 mb-2">
+                <h6 class="fw-bold d-flex justify-content-between align-items-center">Category <i class="fa fa-chevron-up small text-muted"></i></h6>
+                <ul class="list-unstyled mt-3 ps-1">
+                    {% for cat in categories %}
+                    <li class="mb-2"><a href="?category={{ cat }}" class="text-muted text-decoration-none small">{{ cat|capfirst }}</a></li>
+                    {% endfor %}
+                    <li><a href="#" class="text-primary small text-decoration-none">See all</a></li>
+                </ul>
+            </div>
+
+            <div class="bg-white border-top border-bottom py-3 mb-2">
+                <h6 class="fw-bold d-flex justify-content-between align-items-center">Brands <i class="fa fa-chevron-up small text-muted"></i></h6>
+                <div class="mt-3 ps-1">
+                    <div class="form-check mb-2 small"><input class="form-check-input" type="checkbox"> <label class="form-check-label">Samsung</label></div>
+                    <div class="form-check mb-2 small"><input class="form-check-input" type="checkbox"> <label class="form-check-label">Apple</label></div>
+                    <div class="form-check mb-2 small"><input class="form-check-input" type="checkbox"> <label class="form-check-label">Huawei</label></div>
+                    <a href="#" class="text-primary small text-decoration-none">See all</a>
+                </div>
+            </div>
+
+            <div class="bg-white border-top border-bottom py-3 mb-2">
+                <h6 class="fw-bold">Price range</h6>
+                <div class="mt-3 ps-1">
+                    <input type="range" class="form-range" min="0" max="1000">
+                    <div class="d-flex gap-2 mt-2">
+                        <input type="number" class="form-control form-control-sm" placeholder="0">
+                        <input type="number" class="form-control form-control-sm" placeholder="99999">
+                    </div>
+                    <button class="btn btn-white border w-100 btn-sm mt-2 text-primary fw-bold">Apply</button>
+                </div>
+            </div>
+
+            <div class="bg-white border-top border-bottom py-3 mb-2">
+                <h6 class="fw-bold">Condition</h6>
+                <div class="mt-3 ps-1 small">
+                    <div class="form-check mb-2"><input class="form-check-input" type="radio" name="cond" checked> <label class="form-check-label">Any</label></div>
+                    <div class="form-check mb-2"><input class="form-check-input" type="radio" name="cond"> <label class="form-check-label">Refurbished</label></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="bg-white border rounded p-3 mb-3 d-flex justify-content-between align-items-center shadow-sm">
+                <span class="small">{{ products.paginator.count }} items found</span>
+                <div class="d-flex align-items-center gap-2">
+                    <div class="form-check me-3 mt-1 small"><input class="form-check-input" type="checkbox" checked> <label class="form-check-label">Verified only</label></div>
+                    <select class="form-select form-select-sm" style="width: 120px;"><option>Featured</option></select>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-white border"><i class="fa fa-th"></i></button>
+                        <button class="btn btn-white border active bg-light"><i class="fa fa-bars"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            {% for product in products %}
+            <div class="card mb-3 shadow-sm border-0">
+                <div class="row g-0 p-3">
+                    <div class="col-md-3 text-center">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="img-fluid rounded-start" style="max-height: 180px; object-fit: contain;">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-7 px-md-4">
+                        <div class="card-body p-0">
+                            <h6 class="fw-bold mb-1">{{ product.name }}</h6>
+                            <div class="d-flex align-items-center gap-2 mb-2">
+                                <span class="fw-bold fs-5">${{ product.price }}</span>
+                                <span class="text-muted text-decoration-line-through small">${{ product.price|add:150 }}</span>
+                            </div>
+                            <div class="text-warning small mb-2">
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt text-muted"></i>
+                                <span class="text-primary ms-2">7.5</span> <span class="text-muted ms-2">• 154 orders</span> <span class="text-success ms-2">• Free Shipping</span>
+                            </div>
+                            <p class="card-text text-muted small mb-3">
+                                {{ product.description|truncatechars:180|default:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }}
+                            </p>
+                            <a href="{% url 'product_detail' product.id %}" class="text-primary small fw-bold text-decoration-none">View details</a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 text-end">
+                        <button class="btn btn-white border rounded-circle"><i class="fa fa-heart text-primary"></i></button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5"><p class="text-muted">No products found.</p></div>
+            {% endfor %}
+
+            <div class="d-flex justify-content-end align-items-center gap-3 mt-4">
+                <select class="form-select form-select-sm" style="width: 100px;"><option>Show 10</option></select>
+                <nav>
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item"><a class="page-link" href="#"><i class="fa fa-chevron-left"></i></a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><i class="fa fa-chevron-right"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
