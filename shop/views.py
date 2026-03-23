@@ -31,17 +31,16 @@ def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     return render(request, 'shop/product_detail.html', {'product': product, 'products': Product.objects.all()[:4]})
 
-# 4. ADD TO CART (FIXED FOR 500 ERROR)
+# 4. ADD TO CART
 def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    # If user is not logged in, we use a generic placeholder or redirect to login
-    # For Week 3 testing, we'll allow anonymous cart via first available record or session
-    user = request.user if request.user.is_authenticated else None
+    if not request.user.is_authenticated:
+        return redirect('login')
     
+    product = get_object_or_404(Product, id=product_id)
     cart_item, created = CartItem.objects.get_or_create(
-        user=user,
+        user=request.user,
         product=product,
-        defaults={'quantity': 1} # Ensure quantity is never None
+        defaults={'quantity': 1}
     )
     
     if not created:
@@ -50,39 +49,42 @@ def add_to_cart(request, product_id):
         
     return redirect('cart_page')
 
-# 5. VIEW CART
+# 5. VIEW CART (Variable sync with HTML)
 def view_cart(request):
     user = request.user if request.user.is_authenticated else None
     cart_items = CartItem.objects.filter(user=user)
     
-    # Safety calc for subtotal
     subtotal = Decimal('0.00')
     for item in cart_items:
-        if item.product and item.product.price:
-            subtotal += item.quantity * item.product.price
+        # Convert to string first to avoid float-precision errors
+        price = Decimal(str(item.product.price))
+        subtotal += item.quantity * price
 
-    tax = Decimal('14.00')
-    discount = Decimal('60.00')
-    total = (subtotal + tax) - discount if cart_items.exists() else Decimal('0.00')
+    tax = Decimal('14.00') if cart_items.exists() else Decimal('0.00')
+    discount = Decimal('60.00') if cart_items.exists() else Decimal('0.00')
+    
+    # Final total calculation
+    total = (subtotal + tax) - discount
+    if total < 0: total = Decimal('0.00')
 
     return render(request, 'shop/cart.html', {
         'cart_items': cart_items,
         'subtotal': subtotal,
         'tax': tax,
         'discount': discount,
-        'total': total if total > 0 else Decimal('0.00'),
+        'total': total, # Matches {{ total }} in HTML
         'products': Product.objects.all()[:4],
     })
 
-# 6. REMOVE & CLEAR (FIXED)
+# 6. REMOVE & CLEAR
 def remove_from_cart(request, product_id):
-    user = request.user if request.user.is_authenticated else None
-    CartItem.objects.filter(user=user, product_id=product_id).delete()
+    if request.user.is_authenticated:
+        CartItem.objects.filter(user=request.user, product_id=product_id).delete()
     return redirect('cart_page')
 
 def clear_cart(request):
-    user = request.user if request.user.is_authenticated else None
-    CartItem.objects.filter(user=user).delete()
+    if request.user.is_authenticated:
+        CartItem.objects.filter(user=request.user).delete()
     return redirect('cart_page')
 
 # AUTH & ADD PRODUCT

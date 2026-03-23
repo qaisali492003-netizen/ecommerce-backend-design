@@ -85,7 +85,7 @@
                         </div>
                         <div class="d-none d-md-block">
                             <select class="form-select form-select-sm" style="width: 100px;">
-                                <option>Qty: 1</option><option>Qty: 2</option><option>Qty: 3</option>
+                                <option>Qty: {{ item.quantity }}</option>
                             </select>
                         </div>
                     </div>
@@ -107,9 +107,9 @@
                 </div>
 
                 <div class="row g-3 mb-4">
-                    <div class="col-md-4"><div class="d-flex align-items-center gap-3"><div class="rounded-circle bg-light p-3"><i class="fa fa-lock text-muted"></i></div><div class="small"><b>Secure payment</b><br><span class="text-muted">Have you ever finally just</span></div></div></div>
-                    <div class="col-md-4"><div class="d-flex align-items-center gap-3"><div class="rounded-circle bg-light p-3"><i class="fa fa-comment text-muted"></i></div><div class="small"><b>Customer support</b><br><span class="text-muted">Have you ever finally just</span></div></div></div>
-                    <div class="col-md-4"><div class="d-flex align-items-center gap-3"><div class="rounded-circle bg-light p-3"><i class="fa fa-truck text-muted"></i></div><div class="small"><b>Free delivery</b><br><span class="text-muted">Have you ever finally just</span></div></div></div>
+                    <div class="col-md-4"><div class="d-flex align-items-center gap-3"><div class="rounded-circle bg-light p-3"><i class="fa fa-lock text-muted"></i></div><div class="small"><b>Secure payment</b><br><span class="text-muted">Encrypted transactions</span></div></div></div>
+                    <div class="col-md-4"><div class="d-flex align-items-center gap-3"><div class="rounded-circle bg-light p-3"><i class="fa fa-comment text-muted"></i></div><div class="small"><b>Customer support</b><br><span class="text-muted">24/7 help center</span></div></div></div>
+                    <div class="col-md-4"><div class="d-flex align-items-center gap-3"><div class="rounded-circle bg-light p-3"><i class="fa fa-truck text-muted"></i></div><div class="small"><b>Free delivery</b><br><span class="text-muted">On orders over $100</span></div></div></div>
                 </div>
             </div>
 
@@ -123,13 +123,13 @@
                 </div>
 
                 <div class="white-card shadow-sm">
-                    <div class="summary-row"><span class="text-muted">Subtotal:</span><span>${{ total_price|default:"0.00" }}</span></div>
-                    <div class="summary-row"><span class="text-muted">Discount:</span><span class="text-danger">-$0.00</span></div>
-                    <div class="summary-row"><span class="text-muted">Tax:</span><span class="text-success">+$0.00</span></div>
+                    <div class="summary-row"><span class="text-muted">Subtotal:</span><span>${{ subtotal|default:"0.00" }}</span></div>
+                    <div class="summary-row"><span class="text-muted">Discount:</span><span class="text-danger">-${{ discount|default:"0.00" }}</span></div>
+                    <div class="summary-row"><span class="text-muted">Tax:</span><span class="text-success">+${{ tax|default:"0.00" }}</span></div>
                     
                     <div class="summary-row total-price">
                         <span>Total:</span>
-                        <span>${{ total_price|default:"0.00" }}</span>
+                        <span>${{ total|default:"0.00" }}</span>
                     </div>
 
                     <button class="btn-checkout mt-3">Checkout</button>
@@ -165,14 +165,6 @@
                 </div>
                 {% endfor %}
             </div>
-        </div>
-
-        <div class="bg-primary text-white rounded p-4 mt-4 d-flex justify-content-between align-items-center mb-5" style="background: linear-gradient(90deg, #237CFF 0%, #005ADE 100%) !important;">
-            <div>
-                <h5 class="fw-bold mb-1">Super discount on more than 100 USD</h5>
-                <p class="mb-0 opacity-75 small">Have you ever finally just write dummy info</p>
-            </div>
-            <button class="btn btn-warning fw-bold px-4" style="background: #FF9017; border: none; color: white;">Shop now</button>
         </div>
     </div>
 
