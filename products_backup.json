@@ -1,0 +1,258 @@
+[
+{
+  "model": "shop.product",
+  "pk": 1,
+  "fields": {
+    "name": "Zenith Wireless Headphones",
+    "price": "149.99",
+    "old_price": null,
+    "category": "Electronics",
+    "brand": "Generic",
+    "image": "products/319309_0_s20WFaO4p.webp",
+    "description": "Premium noise-canceling headphones with 40-hour battery life.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 2,
+  "fields": {
+    "name": "Arctic Peak Parka",
+    "price": "89.00",
+    "old_price": null,
+    "category": "Fashion",
+    "brand": "Generic",
+    "image": "products/Puffer_Uniqlo-seamless-down-puffer-jacket-as-selected-by-Faye-Fearon.webp",
+    "description": "Water-resistant winter jacket designed for extreme cold.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 3,
+  "fields": {
+    "name": "Minimalist Oak Desk",
+    "price": "300.00",
+    "old_price": null,
+    "category": "Home Decor",
+    "brand": "Generic",
+    "image": "products/modern-workspace-featuring-wooden-desk-600nw-2715897041.webp",
+    "description": "Sustainably sourced oak wood desk with a sleek, modern finish.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 4,
+  "fields": {
+    "name": "Vanguard Smartwatch",
+    "price": "50.00",
+    "old_price": null,
+    "category": "Accessories",
+    "brand": "Generic",
+    "image": "products/da.jpeg",
+    "description": "Track your fitness, sleep, and heart rate with a 7-day battery.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 5,
+  "fields": {
+    "name": "TurboBrew Coffee Maker",
+    "price": "55.00",
+    "old_price": null,
+    "category": "Kitchen",
+    "brand": "Generic",
+    "image": "products/sda.jpeg",
+    "description": "Programmable drip coffee maker with a built-in grinder.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 6,
+  "fields": {
+    "name": "GoPro Hero 11",
+    "price": "150.00",
+    "old_price": null,
+    "category": "Electronics",
+    "brand": "Generic",
+    "image": "products/sdsda.webp",
+    "description": "Waterproof action camera with 5.3K60 Ultra HD video.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 7,
+  "fields": {
+    "name": "Smartwatch Silver",
+    "price": "120.00",
+    "old_price": null,
+    "category": "Electronics",
+    "brand": "Generic",
+    "image": "products/images.png",
+    "description": "Modern fitness tracker with heart rate monitor and GPS.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 8,
+  "fields": {
+    "name": "Gaming Headset",
+    "price": "340.00",
+    "old_price": null,
+    "category": "Electronics",
+    "brand": "Generic",
+    "image": "products/sdaasd.jpeg",
+    "description": "Over-ear headphones with noise-canceling mic for pro gaming.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 9,
+  "fields": {
+    "name": "Canon EOS R5",
+    "price": "670.00",
+    "old_price": null,
+    "category": "Electronics",
+    "brand": "Generic",
+    "image": "products/sad.jpeg",
+    "description": "Professional mirrorless camera with 45MP full-frame sensor.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 10,
+  "fields": {
+    "name": "Electric Kettle",
+    "price": "45.00",
+    "old_price": null,
+    "category": "Electronics",
+    "brand": "Generic",
+    "image": "products/adskl.webp",
+    "description": "1.7L Stainless steel rapid boil kettle with auto shut-off.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 11,
+  "fields": {
+    "name": "Soft Office Chair",
+    "price": "19.00",
+    "old_price": null,
+    "category": "Home",
+    "brand": "Generic",
+    "image": "products/asd.jpeg",
+    "description": "Ergonomic mesh office chair with lumbar support.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 12,
+  "fields": {
+    "name": "Kitchen Mixer",
+    "price": "100.00",
+    "old_price": null,
+    "category": "Home",
+    "brand": "Generic",
+    "image": "products/adsads.jpeg",
+    "description": "5-Quart stand mixer with 10-speed slide control.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 13,
+  "fields": {
+    "name": "Smart Coffee Maker",
+    "price": "39.00",
+    "old_price": null,
+    "category": "Home",
+    "brand": "Generic",
+    "image": "products/vsfvgs.jpeg",
+    "description": "Programmable drip coffee maker with glass carafe.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 14,
+  "fields": {
+    "name": "Compact Blender",
+    "price": "24.00",
+    "old_price": null,
+    "category": "Home",
+    "brand": "Generic",
+    "image": "products/adsfdasf.webp",
+    "description": "High-speed personal blender for shakes and smoothies.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 15,
+  "fields": {
+    "name": "Minimalist Lamp",
+    "price": "45.00",
+    "old_price": null,
+    "category": "Home",
+    "brand": "Generic",
+    "image": "products/asfdsa.jpeg",
+    "description": "Modern wooden base table lamp with linen shade.",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+},
+{
+  "model": "shop.product",
+  "pk": 16,
+  "fields": {
+    "name": "tshirt",
+    "price": "12.00",
+    "old_price": null,
+    "category": "Clothing",
+    "brand": "Generic",
+    "image": "products/646.jpg",
+    "description": "Cotton Tshirt",
+    "stock": 0,
+    "is_verified": false,
+    "rating": "4.5"
+  }
+}
+]
